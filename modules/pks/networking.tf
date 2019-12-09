@@ -17,3 +17,8 @@ resource "azurerm_subnet_network_security_group_association" "pks_services" {
   subnet_id                 = "${azurerm_subnet.pks_services.id}"
   network_security_group_id = "${var.bosh_deployed_vms_security_group_id}"
 }
+
+resource "azurerm_subnet_network_security_group_association" "pks_vms_security_group_association" {
+  subnet_id                 = "${azurerm_subnet.pks.id}"
+  network_security_group_id = "${var.bosh_deployed_vms_security_group_id}"
+}

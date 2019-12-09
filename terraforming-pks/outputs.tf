@@ -182,6 +182,10 @@ output "azs" {
   value = "${var.availability_zones}"
 }
 
+output "pks_api_app_sec_group" {
+  value = "${module.pks.pks_api_app_sec_group}"
+}
+
 # Deprecated properties
 
 output "management_subnet_name" {

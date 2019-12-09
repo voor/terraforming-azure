@@ -2,7 +2,7 @@ output "pks-master-app-sec-group" {
   value = "${azurerm_application_security_group.pks-master.id}"
 }
 
-output "pks-api-app-sec-group" {
+output "pks_api_app_sec_group" {
   value = "${azurerm_application_security_group.pks-api.id}"
 }
 
@@ -11,7 +11,7 @@ output "pks-lb-name" {
 }
 
 output "pks_lb_network_sg" {
-  value = "${azurerm_network_security_group.pks-api.name}"
+  value = "${azurerm_network_security_group.pks_api.name}"
 }
 
 # Subnets

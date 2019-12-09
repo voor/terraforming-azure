@@ -75,6 +75,6 @@ vmextensions-configuration:
   - name: pks-api-lb-security-groups
     cloud_properties:
       security_groups: 
-      - {{.pks_lb_network_sg}}
+      - {{.pks-api-app-sec-group}}
       - {{.default_security_group}}
 {{end}}

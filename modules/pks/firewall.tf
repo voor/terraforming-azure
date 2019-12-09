@@ -13,7 +13,7 @@ resource "azurerm_application_security_group" "pks-api" {
 }
 
 // Allow access from the internet to the masters
-resource "azurerm_network_security_group" "pks-master" {
+resource "azurerm_network_security_group" "pks_master" {
   name                = "${var.env_id}-pks-master-sg"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
@@ -31,8 +31,14 @@ resource "azurerm_network_security_group" "pks-master" {
   }
 }
 
+resource "azurerm_subnet_network_security_group_association" "pks_master_security_group_association" {
+  subnet_id                 = "${azurerm_subnet.pks.id}"
+  network_security_group_id = "${azurerm_network_security_group.pks_master.id}"
+}
+
+
 // Allow access from the internet to the PKS API VM
-resource "azurerm_network_security_group" "pks-api" {
+resource "azurerm_network_security_group" "pks_api" {
   name                = "${var.env_id}-pks-api-sg"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
@@ -50,8 +56,14 @@ resource "azurerm_network_security_group" "pks-api" {
   }
 }
 
+resource "azurerm_subnet_network_security_group_association" "pks_api_security_group_association" {
+  subnet_id                 = "${azurerm_subnet.pks.id}"
+  network_security_group_id = "${azurerm_network_security_group.pks_api.id}"
+}
+
+
 // Allow access from the internal VMs to the internal VMs via TCP and UDP
-resource "azurerm_network_security_group" "pks-internal" {
+resource "azurerm_network_security_group" "pks_internal" {
   name                = "${var.env_id}-pks-internal-sg"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
@@ -67,4 +79,9 @@ resource "azurerm_network_security_group" "pks-internal" {
     source_address_prefixes    = ["${local.pks_cidr}", "${local.pks_services_cidr}"]
     destination_address_prefix = "*"
   }
+}
+
+resource "azurerm_subnet_network_security_group_association" "pks_internal_security_group_association" {
+  subnet_id                 = "${azurerm_subnet.pks.id}"
+  network_security_group_id = "${azurerm_network_security_group.pks_internal.id}"
 }
